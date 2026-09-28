@@ -34,12 +34,12 @@ jobs:
         working-directory: ${{ matrix.app }}
         run: |
           chmod +x gradlew
-          ./gradlew test --console=plain --stacktrace
+          ./gradlew test --console=plain --stacktrace --no-build-cache
 
       - name: Integration tests (complete only)
         if: matrix.app == 'complete'
         working-directory: complete
-        run: ./gradlew integrationTest --console=plain --stacktrace
+        run: ./gradlew integrationTest --console=plain --stacktrace --no-build-cache
 
       - name: Startup smoke check (complete only)
         if: matrix.app == 'complete'
