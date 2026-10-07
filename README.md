@@ -103,8 +103,8 @@ The exact Keycloak database configuration is covered in [KEYCLOAK.md](KEYCLOAK.m
 Clone the repository:
 
 ```bash
-git clone https://github.com/amondel2/grails-keycloak-example.git
-cd grails-keycloak-example
+git clone -b grails8 https://github.com/grails-guides/grails-keycloak.git
+cd grails-keycloak/complete
 ```
 
 The application reads its Keycloak configuration from environment variables.
@@ -173,12 +173,14 @@ After successfully authenticating with Keycloak, the user will be returned to th
 
 # 4. Keycloak Roles
 
-This example uses two realm roles:
+This example uses two **client roles** on `example-client`:
 
 ```text
 USER
 ADMIN
 ```
+
+Create them under **Clients → example-client → Roles** — not under **Realm roles**.
 
 The `USER` role represents normal authenticated application users.
 
@@ -201,6 +203,10 @@ and:
 Keycloak supports composite roles.
 
 For this example, `ADMIN` should inherit `USER`.
+
+Make `ADMIN` a composite role that includes `USER`:
+
+**Clients → example-client → Roles → ADMIN → Associated roles → Add `USER`.**
 
 The resulting relationship is:
 
@@ -241,7 +247,9 @@ def administration() {
 }
 ```
 
-The complete Keycloak role configuration is documented in [KEYCLOAK.md](KEYCLOAK.md).
+The client roles must also be included in the ID token. Ensure the client-role mapper is configured for `example-client` with **Add to ID token** turned on.
+
+The complete client-role and mapper configuration is documented in [KEYCLOAK.md](KEYCLOAK.md) sections 19–24.
 
 Keycloak calls this type of role a **composite role**. Composite roles cause the associated roles to become effective roles for a user assigned the composite role.
 

@@ -624,6 +624,30 @@ This is the OAuth2 login callback used by the Grails application.
 
 If you run the application on a different URL, change the redirect URI accordingly.
 
+## Post-logout redirect URI
+
+Logging out must return the browser to the application. Under the same client, open:
+
+**Clients → example-client → Settings → Logout settings**
+
+Add a **Valid post logout redirect URI** of:
+
+```text
+http://localhost:8080
+```
+
+(or whatever `{baseUrl}` resolves to for the environment).
+
+The Grails application configures `OidcClientInitiatedLogoutSuccessHandler` with
+`setPostLogoutRedirectUri("{baseUrl}")`, and Keycloak 18+ rejects a logout redirect
+that is not registered here.
+
+In production, register the deployed URL instead, for example:
+
+```text
+https://your-domain.com
+```
+
 ---
 
 # 18. Configure Web Origins
