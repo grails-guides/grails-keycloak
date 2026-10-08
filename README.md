@@ -63,7 +63,7 @@ The Grails application uses an embedded H2 in-memory database and does not requi
 Before starting, install:
 
 * Java 21
-* Grails 8.x
+* Grails 8.0.0
 * PostgreSQL (used by Keycloak)
 * Keycloak 26.x
 
@@ -189,14 +189,16 @@ The `ADMIN` role represents administrators.
 The application can use Spring Security annotations such as:
 
 ```groovy
-@PreAuthorize("hasRole('ROLE_USER')")
+@PreAuthorize("hasRole('USER')")
 ```
 
 and:
 
 ```groovy
-@PreAuthorize("hasRole('ROLE_ADMIN')")
+@PreAuthorize("hasRole('ADMIN')")
 ```
+
+Use `hasRole('USER')` and `hasRole('ADMIN')` to match the controllers. With the default `ROLE_` prefix, these check `ROLE_USER` and `ROLE_ADMIN`, which is what the mapper stores.
 
 ## Role inheritance
 
@@ -234,14 +236,14 @@ This is useful because application code can protect normal functionality with `R
 For example:
 
 ```groovy
-@PreAuthorize("hasRole('ROLE_USER')")
+@PreAuthorize("hasRole('USER')")
 def account() {
     // Available to USER and ADMIN
 }
 ```
 
 ```groovy
-@PreAuthorize("hasRole('ROLE_ADMIN')")
+@PreAuthorize("hasRole('ADMIN')")
 def administration() {
     // Available only to ADMIN
 }
@@ -340,13 +342,13 @@ USER
 The user should be able to access functionality protected by:
 
 ```groovy
-@PreAuthorize("hasRole('ROLE_USER')")
+@PreAuthorize("hasRole('USER')")
 ```
 
 The user should not be able to access functionality protected by:
 
 ```groovy
-@PreAuthorize("hasRole('ROLE_ADMIN')")
+@PreAuthorize("hasRole('ADMIN')")
 ```
 
 ### ADMIN

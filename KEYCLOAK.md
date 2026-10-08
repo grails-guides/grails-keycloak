@@ -687,7 +687,7 @@ The application uses this role for normal authenticated users.
 For example:
 
 ```groovy
-@PreAuthorize("hasRole('ROLE_USER')")
+@PreAuthorize("hasRole('USER')")
 ```
 
 The Keycloak role is:
@@ -701,6 +701,8 @@ and the Spring Security authority is:
 ```text
 ROLE_USER
 ```
+
+Use `hasRole('USER')` and `hasRole('ADMIN')` to match the sample controllers. With the default `ROLE_` prefix, these check `ROLE_USER` and `ROLE_ADMIN`.
 
 ---
 
@@ -726,7 +728,7 @@ ADMIN
 The application can protect administrator-only functionality with:
 
 ```groovy
-@PreAuthorize("hasRole('ROLE_ADMIN')")
+@PreAuthorize("hasRole('ADMIN')")
 ```
 
 ---
@@ -772,13 +774,13 @@ The administrator does not need to be assigned `USER` separately.
 This allows the application to use:
 
 ```groovy
-@PreAuthorize("hasRole('ROLE_USER')")
+@PreAuthorize("hasRole('USER')")
 ```
 
 for functionality available to both users and administrators, while:
 
 ```groovy
-@PreAuthorize("hasRole('ROLE_ADMIN')")
+@PreAuthorize("hasRole('ADMIN')")
 ```
 
 can be used for administrator-only functionality.
@@ -797,35 +799,29 @@ Navigate to:
 
 **Clients → example-client → Client scopes → Dedicated scopes**
 
-Add a mapper for the client roles.
-
-Configure the mapper for the `example-client` client.
-
-This mapper exposes the client's roles to the tokens used by the application.
+Add a mapper of type **User Client Role**.
 
 ---
 
 # 23. Configure the Mapper
 
-Configure the mapper with the following settings:
+**Token Claim Name** is required and has no default. Set it to the claim the Grails mapper reads.
 
-| Setting                         | Value   |
-| ------------------------------- | ------- |
-| Add to ID token                 | **On**  |
-| Add to access token             | **On**  |
-| Add to lightweight access token | **Off** |
-| Add to userinfo                 | **On**  |
-| Add to token introspection      | **On**  |
+| Setting                         | Value                                      |
+| ------------------------------- | ------------------------------------------ |
+| Name                            | `example-client-roles`                     |
+| Client ID                       | `example-client`                           |
+| Client Role prefix              | leave blank                                |
+| Multivalued                     | **On**                                     |
+| Token Claim Name                | `resource_access.example-client.roles`     |
+| Claim JSON Type                 | `String`                                   |
+| Add to ID token                 | **On**                                     |
+| Add to access token             | **On**                                     |
+| Add to lightweight access token | **Off**                                    |
+| Add to userinfo                 | **On**                                     |
+| Add to token introspection      | **On**                                     |
 
-The final configuration should be:
-
-```text
-Add to ID token:                  On
-Add to access token:              On
-Add to lightweight access token:  Off
-Add to userinfo:                  On
-Add to token introspection:       On
-```
+Leave the prefix blank so the token contains `USER` and `ADMIN`. The application adds `ROLE_` when it maps those names.
 
 ---
 
@@ -1233,13 +1229,13 @@ test-user
 The user should be able to access functionality protected by:
 
 ```groovy
-@PreAuthorize("hasRole('ROLE_USER')")
+@PreAuthorize("hasRole('USER')")
 ```
 
 The user should not be able to access functionality protected by:
 
 ```groovy
-@PreAuthorize("hasRole('ROLE_ADMIN')")
+@PreAuthorize("hasRole('ADMIN')")
 ```
 
 ## Administrator
