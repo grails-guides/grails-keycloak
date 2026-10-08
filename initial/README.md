@@ -1,7 +1,7 @@
-## Grails 8.0.0-RC2 Documentation
+## Grails 8.0.0 Documentation
 
-- [User Guide](https://grails.apache.org/docs/8.0.0-RC2/guide/index.html)
-- [API Reference](https://grails.apache.org/docs/8.0.0-RC2/api/index.html)
+- [User Guide](https://grails.apache.org/docs/8.0.0/guide/index.html)
+- [API Reference](https://grails.apache.org/docs/8.0.0/api/index.html)
 - [Grails Guides](https://guides.grails.org/index.html)
 ---
 
@@ -25,5 +25,5 @@
 
 ## Feature scaffolding documentation
 
-- [Grails Scaffolding documentation](https://grails.apache.org/docs/8.0.0-RC2/guide/scaffolding.html)
+- [Grails Scaffolding documentation](https://grails.apache.org/docs/8.0.0/guide/scaffolding.html)
 
